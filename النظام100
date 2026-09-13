@@ -1,0 +1,745 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 800 800">
+
+<defs>
+
+<linearGradient id="rgbRing" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#00ff66">
+        <animate attributeName="stop-color"
+            values="#00ff66;#00e5ff;#8a2be2;#ff0055;#00ff66"
+            dur="6s"
+            repeatCount="indefinite"/>
+    </stop>
+    <stop offset="100%" stop-color="#00e5ff">
+        <animate attributeName="stop-color"
+            values="#00e5ff;#8a2be2;#ff0055;#00ff66;#00e5ff"
+            dur="6s"
+            repeatCount="indefinite"/>
+    </stop>
+</linearGradient>
+
+<filter id="neon">
+    <feGaussianBlur stdDeviation="8" result="blur"/>
+    <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+</filter>
+
+</defs>
+
+<rect width="800" height="800" fill="#050505"/>
+
+<!-- الحلقة الخارجية -->
+
+<circle
+    cx="400"
+    cy="400"
+    r="260"
+    fill="none"
+    stroke="url(#rgbRing)"
+    stroke-width="18"
+    filter="url(#neon)">
+
+    <animate
+        attributeName="stroke-width"
+        values="14;24;14"
+        dur="2s"
+        repeatCount="indefinite"/>
+
+</circle>
+
+<!-- أقواس الهوية -->
+
+<path
+    d="M260 180 Q400 90 540 180"
+    fill="none"
+    stroke="#ff2020"
+    stroke-width="18"/>
+
+<path
+    d="M290 215 Q400 135 510 215"
+    fill="none"
+    stroke="#ffffff"
+    stroke-width="18"/>
+
+<path
+    d="M320 250 Q400 190 480 250"
+    fill="none"
+    stroke="#333333"
+    stroke-width="18"/>
+
+<!-- مركز الشعار -->
+
+<circle
+    cx="400"
+    cy="400"
+    r="120"
+    fill="#111111"
+    stroke="#00e5ff"
+    stroke-width="5"
+    filter="url(#neon)">
+
+    <animate
+        attributeName="r"
+        values="118;124;118"
+        dur="2s"
+        repeatCount="indefinite"/>
+
+</circle>
+
+<!-- النص -->
+
+<text
+    x="400"
+    y="425"
+    text-anchor="middle"
+    font-family="Arial"
+    font-size="70"
+    font-weight="bold"
+    fill="#ffffff">
+
+    DMH
+
+    <animateTransform
+        attributeName="transform"
+        attributeType="XML"
+        type="scale"
+        values="1 1;1.05 1.05;1 1"
+        dur="2s"
+        repeatCount="indefinite"/>
+
+</text>
+
+<!-- هالة داخلية -->
+
+<circle
+    cx="400"
+    cy="400"
+    r="180"
+    fill="none"
+    stroke="#00e5ff"
+    stroke-opacity="0.4"
+    stroke-width="3">
+
+    <animate
+        attributeName="r"
+        values="170;210;170"
+        dur="3s"
+        repeatCount="indefinite"/>
+
+    <animate
+        attributeName="stroke-opacity"
+        values="0.7;0;0.7"
+        dur="3s"
+        repeatCount="indefinite"/>
+
+</circle>
+
+<!-- رابط GitHub -->
+
+<a href="https://github.com/Alnizam-aldusturiu"
+   target="_blank">
+
+<text
+    x="400"
+    y="690"
+    text-anchor="middle"
+    font-family="Arial"
+    font-size="22"
+    fill="#00e5ff">
+
+    github.com/Alnizam-aldusturiu
+
+</text>
+
+</a>
+
+</svg>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منظومة TM10 - معرض الشعارات والبطاقة الرقمية</title>
+  <style>
+    :root {
+      --bg-main: #05050a;
+      --card-bg: rgba(13, 16, 28, 0.8);
+      --neon-cyan: #00f0ff;
+      --neon-pink: #ff007f;
+      --neon-green: #00ff87;
+      --neon-gold: #ffd700;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      background-image: radial-gradient(circle at 50% 0%, #121829, #05050a 80%);
+      color: #ffffff;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* رأس الصفحة */
+    .page-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+    }
+
+    .page-header h1 {
+      font-size: 2.2rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    /* الشبكة الرئيسية */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* الحاويات والبطاقات */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 20px 45px rgba(0, 240, 255, 0.2);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      color: var(--neon-green);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* استجابة الشاشات الصغرى */
+    @media (max-width: 768px) {
+      body { padding: 20px 10px; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- رأس لوحة التحكم -->
+    <header class="page-header">
+      <h1>لوحة الشعارات والهوية الرقمية TM10</h1>
+      <p>تجميع الهويات البصرية، البطاقة الذكية، والرموز الهندسية المشفّرة (DMH Architecture)</p>
+    </header>
+
+    <!-- شريط اللوحة العلوية (Hero Banner) -->
+    <section class="card full-width" style="background: radial-gradient(circle at top right, #131520, #05050a);">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <svg width="50" height="50" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="75" stroke="#00F0FF" stroke-width="3" stroke-dasharray="8,8"/>
+            <circle cx="100" cy="100" r="55" stroke="#FF007F" stroke-width="4"/>
+            <circle cx="100" cy="100" r="18" fill="#00F0FF"/>
+          </svg>
+          <div>
+            <h2 style="color: var(--neon-cyan); font-size: 1.3rem;">المنظومة الدستورية TM10</h2>
+            <span style="font-size: 0.8rem; color: #94a3b8;">alnizam.DMH // Central Hub</span>
+          </div>
+        </div>
+        <span style="background: rgba(0,255,135,0.15); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">نشط وموثق</span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.85rem; background: rgba(0,0,0,0.4); padding: 12px 18px; border-radius: 12px;">
+        <div>توقيع الأمان: <span style="color: var(--neon-gold); font-family: monospace;">● ◇ ♡ £ (HMD)</span></div>
+        <div>الشفرة التسلسلية: <span style="color: var(--neon-green); font-family: monospace;">0123357221111252210001033310</span></div>
+      </div>
+    </section>
+
+    <!-- الشبكة المركزية للرموز والبطاقات -->
+    <div class="dashboard-grid">
+
+      <!-- 1. بطاقة التعريف الرقمية الفاخرة -->
+      <article class="card">
+        <div class="card-title">
+          <span>💳</span> بطاقة التعريف الرقمية (ID Badge)
+        </div>
+        
+        <div style="background: rgba(10, 12, 24, 0.9); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 18px; padding: 20px; position: relative; overflow: hidden;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div style="width: 40px; height: 28px; background: linear-gradient(135deg, #ffd700, #b8860b); border-radius: 4px; border: 1px solid rgba(255,255,255,0.4);"></div>
+            <span style="font-size: 0.7rem; color: var(--neon-cyan); font-family: monospace;">PASS // LEVEL 01</span>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 12px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink), var(--neon-green));">
+              <div style="width: 100%; height: 100%; border-radius: 50%; background: #080a12; display: flex; align-items: center; justify-content: center;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+            </div>
+            <h3 style="font-size: 1rem; color: #fff; margin-bottom: 4px;">عيسى أحمد سيف قاسم لطفي المجيدي</h3>
+            <p style="font-size: 0.75rem; color: var(--neon-cyan); font-family: monospace;">Issa Ahmed Saif Qasim Lutfi Al-Majidi</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px; font-size: 0.75rem; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">المعرّف:</span>
+              <span style="color: var(--neon-green); font-family: monospace;">0123357221...3310</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: #94a3b8;">المنظومة:</span>
+              <span style="color: var(--neon-pink); font-family: monospace;">alnizam.DMH</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. شعار TM10 السيبراني المتجه -->
+      <article class="card">
+        <div class="card-title">
+          <span>🛡️</span> شعار TM10 المتجه (Cyber Emblem)
+        </div>
+        <div style="text-align: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="260px">
+            <defs>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            <path d="M 120 100 A 160 70 0 0 0 380 100" stroke="#FF1744" stroke-width="10" fill="none" stroke-linecap="round" filter="url(#glow)" />
+            <path d="M 140 130 A 140 60 0 0 0 360 130" stroke="#00F0FF" stroke-width="6" fill="none" stroke-linecap="round" filter="url(#glow)" />
+            <circle cx="250" cy="280" r="110" stroke="#00FF87" stroke-width="5" fill="none" filter="url(#glow)" />
+            <rect x="180" y="210" width="140" height="140" rx="10" stroke="#00F0FF" stroke-width="3" fill="rgba(0,240,255,0.05)" />
+            <circle cx="250" cy="280" r="20" fill="#00F0FF" filter="url(#glow)" />
+            <text x="250" y="440" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-weight="bold" font-size="36" filter="url(#glow)">TM10</text>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 3. ختم النواة الماسية الكمومي -->
+      <article class="card">
+        <div class="card-title">
+          <span>💎</span> ختم النواة الماسية (Diamond Seal)
+        </div>
+        <div style="text-align: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="260px">
+            <defs>
+              <filter id="glow2">
+                <feGaussianBlur stdDeviation="5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <polygon points="200,30 370,200 200,370 30,200" stroke="#FF007F" stroke-width="4" fill="none" filter="url(#glow2)" />
+            <polygon points="200,100 290,200 200,300 110,200" stroke="#00FF87" stroke-width="4" fill="rgba(0, 255, 135, 0.03)" filter="url(#glow2)" />
+            <circle cx="200" cy="200" r="24" stroke="#FFD700" stroke-width="3" fill="#000" />
+            <circle cx="200" cy="200" r="10" fill="#00F0FF" filter="url(#glow2)" />
+          </svg>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+</body>
+</html>
+<div style="
+  width: 100%;
+  max-width: 650px;
+  background: radial-gradient(circle at top right, #131520, #05050a);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  direction: rtl;
+  position: relative;
+  overflow: hidden;
+">
+  <!-- خلفية التوهج العلوية -->
+  <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: #00f0ff; opacity: 0.15; filter: blur(50px); border-radius: 50%;"></div>
+  
+  <!-- شعار TM10 البصري الحي -->
+  <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px;">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <svg width="60" height="60" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="75" stroke="#00F0FF" stroke-width="3" stroke-dasharray="8,8" opacity="0.6"/>
+        <circle cx="100" cy="100" r="55" stroke="#FF007F" stroke-width="4" />
+        <path d="M100 20 L100 180 M20 100 L180 100" stroke="#00FF87" stroke-width="2" opacity="0.4"/>
+        <circle cx="100" cy="100" r="18" fill="#00F0FF" style="filter: drop-shadow(0 0 10px #00F0FF);"/>
+      </svg>
+      <div>
+        <h2 style="margin: 0; font-size: 1.4rem; color: #00F0FF; text-shadow: 0 0 10px rgba(0,240,255,0.5);">المنظومة الدستورية TM10</h2>
+        <span style="font-size: 0.85rem; color: #94a3b8;">DMH Data Panel Architecture</span>
+      </div>
+    </div>
+    <span style="background: rgba(0, 255, 135, 0.15); border: 1px solid #00FF87; color: #00FF87; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; box-shadow: 0 0 12px rgba(0,255,135,0.25);">نشط وجاهز</span>
+  </div>
+
+  <!-- مؤشر الحالات والتوقيع -->
+  <div style="background: rgba(13, 14, 21, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <span style="color: #e0e6ed; font-size: 0.9rem;">مستوى الجودة والأمان:</span>
+      <span style="color: #FFB700; letter-spacing: 3px; font-size: 1.1rem; filter: drop-shadow(0 0 6px #FFB700);">○ ○ ○ ○ ○ ○ ○ ○ ○ ☆</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span style="color: #e0e6ed; font-size: 0.9rem;">التوقيع الرقمي المشفّر:</span>
+      <span style="color: #00F0FF; font-weight: bold; font-size: 1rem; letter-spacing: 2px;">● ◇ ♡ £ (HMD)</span>
+    </div>
+  </div>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="100%" height="300px" style="background: #05050a; border-radius: 16px;">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- المدارات المتداخلة -->
+  <ellipse cx="150" cy="150" rx="110" ry="35" stroke="#00F0FF" stroke-width="3" fill="none" transform="rotate(30 150 150)" filter="url(#glow)" />
+  <ellipse cx="150" cy="150" rx="110" ry="35" stroke="#FF007F" stroke-width="3" fill="none" transform="rotate(-30 150 150)" filter="url(#glow)" />
+  <ellipse cx="150" cy="150" rx="110" ry="35" stroke="#00FF87" stroke-width="2.5" fill="none" transform="rotate(90 150 150)" />
+
+  <!-- النواة والجسيمات النجمية -->
+  <circle cx="150" cy="150" r="22" fill="#FFFFFF" filter="url(#glow)" />
+  <circle cx="235" cy="100" r="7" fill="#00F0FF" filter="url(#glow)" />
+  <circle cx="65" cy="100" r="7" fill="#FF007F" filter="url(#glow)" />
+  <circle cx="150" cy="40" r="7" fill="#00FF87" filter="url(#glow)" />
+</svg><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منظومة TM10 - معرض الشعارات والبطاقة الرقمية</title>
+  <style>
+    :root {
+      --bg-main: #05050a;
+      --card-bg: rgba(13, 16, 28, 0.8);
+      --neon-cyan: #00f0ff;
+      --neon-pink: #ff007f;
+      --neon-green: #00ff87;
+      --neon-gold: #ffd700;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      background-image: radial-gradient(circle at 50% 0%, #121829, #05050a 80%);
+      color: #ffffff;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* رأس الصفحة */
+    .page-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.15);
+    }
+
+    .page-header h1 {
+      font-size: 2.2rem;
+      color: var(--neon-cyan);
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+
+    /* الشبكة الرئيسية */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* الحاويات والبطاقات */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: 0 20px 45px rgba(0, 240, 255, 0.2);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      color: var(--neon-green);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* استجابة الشاشات الصغرى */
+    @media (max-width: 768px) {
+      body { padding: 20px 10px; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- رأس لوحة التحكم -->
+    <header class="page-header">
+      <h1>لوحة الشعارات والهوية الرقمية TM10</h1>
+      <p>تجميع الهويات البصرية، البطاقة الذكية، والرموز الهندسية المشفّرة (DMH Architecture)</p>
+    </header>
+
+    <!-- شريط اللوحة العلوية (Hero Banner) -->
+    <section class="card full-width" style="background: radial-gradient(circle at top right, #131520, #05050a);">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <svg width="50" height="50" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="75" stroke="#00F0FF" stroke-width="3" stroke-dasharray="8,8"/>
+            <circle cx="100" cy="100" r="55" stroke="#FF007F" stroke-width="4"/>
+            <circle cx="100" cy="100" r="18" fill="#00F0FF"/>
+          </svg>
+          <div>
+            <h2 style="color: var(--neon-cyan); font-size: 1.3rem;">المنظومة الدستورية TM10</h2>
+            <span style="font-size: 0.8rem; color: #94a3b8;">alnizam.DMH // Central Hub</span>
+          </div>
+        </div>
+        <span style="background: rgba(0,255,135,0.15); border: 1px solid var(--neon-green); color: var(--neon-green); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">نشط وموثق</span>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.85rem; background: rgba(0,0,0,0.4); padding: 12px 18px; border-radius: 12px;">
+        <div>توقيع الأمان: <span style="color: var(--neon-gold); font-family: monospace;">● ◇ ♡ £ (HMD)</span></div>
+        <div>الشفرة التسلسلية: <span style="color: var(--neon-green); font-family: monospace;">0123357221111252210001033310</span></div>
+      </div>
+    </section>
+
+    <!-- الشبكة المركزية للرموز والبطاقات -->
+    <div class="dashboard-grid">
+
+      <!-- 1. بطاقة التعريف الرقمية الفاخرة -->
+      <article class="card">
+        <div class="card-title">
+          <span>💳</span> بطاقة التعريف الرقمية (ID Badge)
+        </div>
+        
+        <div style="background: rgba(10, 12, 24, 0.9); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 18px; padding: 20px; position: relative; overflow: hidden;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div style="width: 40px; height: 28px; background: linear-gradient(135deg, #ffd700, #b8860b); border-radius: 4px; border: 1px solid rgba(255,255,255,0.4);"></div>
+            <span style="font-size: 0.7rem; color: var(--neon-cyan); font-family: monospace;">PASS // LEVEL 01</span>
+          </div>
+
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 12px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink), var(--neon-green));">
+              <div style="width: 100%; height: 100%; border-radius: 50%; background: #080a12; display: flex; align-items: center; justify-content: center;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+            </div>
+            <h3 style="font-size: 1rem; color: #fff; margin-bottom: 4px;">عيسى أحمد سيف قاسم لطفي المجيدي</h3>
+            <p style="font-size: 0.75rem; color: var(--neon-cyan); font-family: monospace;">Issa Ahmed Saif Qasim Lutfi Al-Majidi</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px; font-size: 0.75rem; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">المعرّف:</span>
+              <span style="color: var(--neon-green); font-family: monospace;">0123357221...3310</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: #94a3b8;">المنظومة:</span>
+              <span style="color: var(--neon-pink); font-family: monospace;">alnizam.DMH</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. شعار TM10 السيبراني المتجه -->
+      <article class="card">
+        <div class="card-title">
+          <span>🛡️</span> شعار TM10 المتجه (Cyber Emblem)
+        </div>
+        <div style="text-align: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="260px">
+            <defs>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            <path d="M 120 100 A 160 70 0 0 0 380 100" stroke="#FF1744" stroke-width="10" fill="none" stroke-linecap="round" filter="url(#glow)" />
+            <path d="M 140 130 A 140 60 0 0 0 360 130" stroke="#00F0FF" stroke-width="6" fill="none" stroke-linecap="round" filter="url(#glow)" />
+            <circle cx="250" cy="280" r="110" stroke="#00FF87" stroke-width="5" fill="none" filter="url(#glow)" />
+            <rect x="180" y="210" width="140" height="140" rx="10" stroke="#00F0FF" stroke-width="3" fill="rgba(0,240,255,0.05)" />
+            <circle cx="250" cy="280" r="20" fill="#00F0FF" filter="url(#glow)" />
+            <text x="250" y="440" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-weight="bold" font-size="36" filter="url(#glow)">TM10</text>
+          </svg>
+        </div>
+      </article>
+
+      <!-- 3. ختم النواة الماسية الكمومي -->
+      <article class="card">
+        <div class="card-title">
+          <span>💎</span> ختم النواة الماسية (Diamond Seal)
+        </div>
+        <div style="text-align: center;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="260px">
+            <defs>
+              <filter id="glow2">
+                <feGaussianBlur stdDeviation="5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <polygon points="200,30 370,200 200,370 30,200" stroke="#FF007F" stroke-width="4" fill="none" filter="url(#glow2)" />
+            <polygon points="200,100 290,200 200,300 110,200" stroke="#00FF87" stroke-width="4" fill="rgba(0, 255, 135, 0.03)" filter="url(#glow2)" />
+            <circle cx="200" cy="200" r="24" stroke="#FFD700" stroke-width="3" fill="#000" />
+            <circle cx="200" cy="200" r="10" fill="#00F0FF" filter="url(#glow2)" />
+          </svg>
+        </div>
+      </article>
+<div style="
+  width: 100%;
+  max-width: 650px;
+  background: radial-gradient(circle at top right, #131520, #05050a);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  direction: rtl;
+  position: relative;
+  overflow: hidden;
+">
+  <!-- خلفية التوهج العلوية -->
+  <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: #00f0ff; opacity: 0.15; filter: blur(50px); border-radius: 50%;"></div>
+  
+  <!-- شعار TM10 البصري الحي -->
+  <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px;">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <svg width="60" height="60" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="75" stroke="#00F0FF" stroke-width="3" stroke-dasharray="8,8" opacity="0.6"/>
+        <circle cx="100" cy="100" r="55" stroke="#FF007F" stroke-width="4" />
+        <path d="M100 20 L100 180 M20 100 L180 100" stroke="#00FF87" stroke-width="2" opacity="0.4"/>
+        <circle cx="100" cy="100" r="18" fill="#00F0FF" style="filter: drop-shadow(0 0 10px #00F0FF);"/>
+      </svg>
+      <div>
+        <h2 style="margin: 0; font-size: 1.4rem; color: #00F0FF; text-shadow: 0 0 10px rgba(0,240,255,0.5);">المنظومة الدستورية TM10</h2>
+        <span style="font-size: 0.85rem; color: #94a3b8;">DMH Data Panel Architecture</span>
+      </div>
+    </div>
+    <span style="background: rgba(0, 255, 135, 0.15); border: 1px solid #00FF87; color: #00FF87; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; box-shadow: 0 0 12px rgba(0,255,135,0.25);">نشط وجاهز</span>
+  </div>
+
+  <!-- مؤشر الحالات والتوقيع -->
+  <div style="background: rgba(13, 14, 21, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <span style="color: #e0e6ed; font-size: 0.9rem;">مستوى الجودة والأمان:</span>
+      <span style="color: #FFB700; letter-spacing: 3px; font-size: 1.1rem; filter: drop-shadow(0 0 6px #FFB700);">○ ○ ○ ○ ○ ○ ○ ○ ○ ☆</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span style="color: #e0e6ed; font-size: 0.9rem;">التوقيع الرقمي المشفّر:</span>
+      <span style="color: #00F0FF; font-weight: bold; font-size: 1rem; letter-spacing: 2px;">● ◇ ♡ £ (HMD)</span>
+    </div>
+  </div>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="100%" height="300px" style="background: #05050a; border-radius: 16px;">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- المدارات المتداخلة -->
+  <ellipse cx="150" cy="150" rx="110" ry="35" stroke="#00F0FF" stroke-width="3" fill="none" transform="rotate(30 150 150)" filter="url(#glow)" />
+  <ellipse cx="150" cy="150" rx="110" ry="35" stroke="#FF007F" stroke-width="3" fill="none" transform="rotate(-30 150 150)" filter="url(#glow)" />
+  <ellipse cx="150" cy="150" rx="110" ry="35" stroke="#00FF87" stroke-width="2.5" fill="none" transform="rotate(90 150 150)" />
+
+  <!-- النواة والجسيمات النجمية -->
+  <circle cx="150" cy="150" r="22" fill="#FFFFFF" filter="url(#glow)" />
+  <circle cx="235" cy="100" r="7" fill="#00F0FF" filter="url(#glow)" />
+  <circle cx="65" cy="100" r="7" fill="#FF007F" filter="url(#glow)" />
+  <circle cx="150" cy="40" r="7" fill="#00FF87" filter="url(#glow)" />
+</svg>
+
+    </div>
+  </div>
+
+</body>
+</html>

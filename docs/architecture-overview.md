@@ -1,120 +1,90 @@
-# المخطط المعماري التنفيذي لتطبيق النظام
-
-> مخطط مناسب للعروض التقديمية يوضح تجربة المستخدم، طبقات التطبيق، وخيارات الاستضافة السحابية. أسماء الخدمات السحابية أدناه **تصميم مقترح** وليست تكاملات منفذة حاليًا.
-
-## 1. المخطط التنفيذي الفاخر
-
-```mermaid
-%%{init: {"theme":"base", "themeVariables":{"primaryColor":"#0f766e","primaryTextColor":"#ffffff","primaryBorderColor":"#115e59","lineColor":"#64748b","secondaryColor":"#ecfeff","tertiaryColor":"#f8fafc","fontFamily":"Arial"}}}%%
-flowchart LR
-    classDef user fill:#f59e0b,stroke:#b45309,color:#fff,stroke-width:2px
-    classDef client fill:#0f766e,stroke:#115e59,color:#fff,stroke-width:2px
-    classDef core fill:#2563eb,stroke:#1d4ed8,color:#fff,stroke-width:2px
-    classDef data fill:#7c3aed,stroke:#6d28d9,color:#fff,stroke-width:2px
-    classDef cloud fill:#0891b2,stroke:#0e7490,color:#fff,stroke-width:2px
-    classDef ops fill:#475569,stroke:#334155,color:#fff,stroke-width:2px
-
-    U[المستخدمون]:::user --> M[تطبيق Android<br/>Kotlin + Jetpack Compose]:::client
-
-    subgraph DEVICE[طبقة الجهاز]
-        M --> NAV[Navigation Compose]:::client
-        M --> UX[الشاشات والمكونات<br/>بحث • ملفات • التقرير الدستوري]:::client
-        UX --> VM[ViewModel<br/>إدارة الحالة]:::core
-        VM --> REPO[Repository<br/>مصدر البيانات الموحد]:::core
-        REPO --> LOCAL[(Room Database<br/>وضع عدم الاتصال)]:::data
-    end
-
-    REPO --> API[بوابة API آمنة]:::cloud
-    API --> AUTH[المصادقة وإدارة الجلسات]:::cloud
-    API --> FILES[خدمة الملفات والمستندات]:::cloud
-    API --> SYNC[المزامنة والإشعارات]:::cloud
-    FILES --> OBJECT[(Object Storage)]:::data
-    API --> DB[(Cloud Database)]:::data
-
-    API --> OBS[مراقبة • سجلات • تنبيهات]:::ops
-    OBJECT --> BACKUP[نسخ احتياطي واستعادة]:::ops
-    DB --> BACKUP
-```
-
-## 2. مخطط AWS المقترح
+# مخطط واجهة المستخدم والبيانات
 
 ```mermaid
 flowchart LR
-    App[تطبيق Android] --> Edge[Amazon CloudFront + AWS WAF]
-    Edge --> API[Amazon API Gateway]
-    API --> Auth[Amazon Cognito]
-    API --> Lambda[AWS Lambda / ECS Fargate]
-    Lambda --> DB[(Amazon Aurora / DynamoDB)]
-    Lambda --> S3[(Amazon S3<br/>المستندات والنسخ)]
-    Lambda --> Queue[Amazon SQS]
-    Queue --> Worker[Lambda Workers]
-    App -. إشعارات .-> SNS[Amazon SNS / FCM]
-    Lambda --> Logs[Amazon CloudWatch]
-    DB --> Backup[AWS Backup]
-    S3 --> Backup
+    U[المستخدم] --> UI[واجهة التطبيق
+    Kotlin + Jetpack Compose]
+
+    UI --> Auth[تسجيل الدخول
+    المصادقة]
+    UI --> FileOps[إدارة الملفات
+    إنشاء • نسخ • نقل • حذف]
+    UI --> Doc[قراءة التقرير
+    والنصوص والوثائق]
+    UI --> Search[بحث متقدم
+    فلترة • تصنيف • فهرسة]
+
+    Auth --> VM[ViewModel
+    إدارة الحالة]
+    FileOps --> VM
+    Doc --> VM
+    Search --> VM
+
+    VM --> Repo[Repository
+    منطق البيانات]
+
+    Repo --> Local[(Room Database
+    بيانات محلية)]
+    Repo --> Model[نماذج البيانات
+    DriveFile • DriveSection • SearchFilters]
+    Repo --> Seed[InitialSeedData
+    بيانات أولية]
+
+    Local --> Files[(ملفات المستخدم
+    المجلدات • المستندات • السلة)]
+    Files --> UI
+
+    Repo -. مزامنة مستقبلية .-> Cloud[Google Drive API
+    أو خدمة سحابية مشابهة]
+    Cloud --> Files
+
+    UI --> Theme[Theme + Material 3
+    الألوان • الخطوط • الأيقونات]
+    UI --> Nav[Navigation
+    التنقل بين الشاشات]
 ```
 
-## 3. مخطط Microsoft Azure المقترح
+## شرح سريع
 
-```mermaid
-flowchart LR
-    App[تطبيق Android] --> Front[Azure Front Door + WAF]
-    Front --> API[Azure API Management]
-    API --> Identity[Microsoft Entra ID / B2C]
-    API --> Compute[Azure Functions / App Service]
-    Compute --> DB[(Azure SQL / Cosmos DB)]
-    Compute --> Blob[(Azure Blob Storage<br/>المستندات والنسخ)]
-    Compute --> Bus[Azure Service Bus]
-    Bus --> Worker[Azure Functions Workers]
-    App -. إشعارات .-> Notify[Azure Notification Hubs / FCM]
-    Compute --> Monitor[Azure Monitor + Application Insights]
-    DB --> Backup[Azure Backup]
-    Blob --> Backup
+- المستخدم يتفاعل مع واجهات Compose عبر شاشات التطبيق.
+- كل شاشة ترسل الأحداث إلى `ViewModel`.
+- `ViewModel` يطلب البيانات من `Repository`.
+- `Repository` يقرأ أو يكتب إلى `Room Database` محليًا.
+- البيانات تُعرض في الواجهة فورًا بفضل حالة التطبيق التفاعلية.
+- يمكن لاحقًا ربط المستودع بخدمة سحابية مثل Google Drive.
+
+## هيكل التطبيق
+
+```text
+app/src/main/java/com/example/nizam/
+├── MainActivity.kt
+├── data/
+│   ├── local/
+│   │   ├── AppDatabase.kt
+│   │   ├── DriveFileDao.kt
+│   │   ├── DriveFileEntity.kt
+│   │   └── InitialSeedData.kt
+│   ├── model/
+│   │   ├── DriveFile.kt
+│   │   ├── DriveSection.kt
+│   │   ├── SearchFilters.kt
+│   │   └── NizamConstitutionalReport.kt
+│   └── repository/
+│       └── DriveRepository.kt
+├── ui/
+│   ├── components/
+│   ├── screens/
+│   └── theme/
+├── viewmodel/
+│   ├── DriveViewModel.kt
+│   └── DriveViewModelFactory.kt
+└── ...
 ```
 
-## 4. مخطط Google Cloud المقترح
+## النطاق العملي لهذا المخطط
 
-```mermaid
-flowchart LR
-    App[تطبيق Android] --> CDN[Cloud CDN + Cloud Armor]
-    CDN --> Gateway[API Gateway]
-    Gateway --> Auth[Firebase Authentication / Identity Platform]
-    Gateway --> Compute[Cloud Run / Cloud Functions]
-    Compute --> DB[(Firestore / Cloud SQL)]
-    Compute --> Storage[(Cloud Storage<br/>المستندات والنسخ)]
-    Compute --> PubSub[Pub/Sub]
-    PubSub --> Worker[Cloud Run Jobs / Functions]
-    App -. إشعارات .-> FCM[Firebase Cloud Messaging]
-    Compute --> Observe[Cloud Logging + Monitoring]
-    DB --> Backup[Backup and DR]
-    Storage --> Backup
-```
-
-## 5. مقارنة سريعة للخيارات
-
-| المجال | AWS | Azure | Google Cloud |
-|---|---|---|---|
-| الهوية | Cognito | Entra ID / B2C | Firebase Auth / Identity Platform |
-| واجهة API | API Gateway | API Management | API Gateway |
-| الحوسبة | Lambda أو ECS | Functions أو App Service | Cloud Run أو Functions |
-| قاعدة البيانات | Aurora أو DynamoDB | Azure SQL أو Cosmos DB | Cloud SQL أو Firestore |
-| تخزين الملفات | S3 | Blob Storage | Cloud Storage |
-| الرسائل | SQS / SNS | Service Bus / Notification Hubs | Pub/Sub / FCM |
-| المراقبة | CloudWatch | Azure Monitor | Cloud Monitoring |
-
-## 6. التوصية
-
-- **لأسرع إطلاق لتطبيق Android:** Google Cloud مع Firebase Authentication وFirestore وCloud Storage وFCM.
-- **لبيئة مؤسسية وهوية Microsoft:** Azure مع Entra ID وApp Service وAzure SQL.
-- **لبنية واسعة وقابلة للتوسع:** AWS مع Cognito وAPI Gateway وLambda وS3 وAurora/DynamoDB.
-- يُفضّل إبقاء `DriveRepository` كطبقة عزل، بحيث يمكن تبديل مزود السحابة دون إعادة بناء واجهة التطبيق.
-
-## تدفق البيانات السحابي
-
-1. يسجل المستخدم الدخول من تطبيق Android.
-2. تتحقق خدمة الهوية من الجلسة وتصدر رمز وصول.
-3. يرسل التطبيق الطلب إلى بوابة API عبر HTTPS.
-4. تتحقق الخدمة من الصلاحيات وتقرأ أو تكتب البيانات.
-5. تُخزّن الملفات الكبيرة في Object Storage، بينما تُخزّن البيانات الوصفية في قاعدة البيانات.
-6. تُرسل الأعمال غير المتزامنة إلى Queue أو Pub/Sub لمعالجتها بواسطة Workers.
-7. تُحفظ السجلات والتنبيهات والنسخ الاحتياطية عبر خدمات التشغيل السحابي.
+هذا المخطط مخصص لـ:
+- عرض البنية الداخلية للتطبيق
+- توضيح فصل الواجهة عن البيانات
+- شرح كيف تتدفق المعلومات داخل التطبيق
+- تقديم فكرة واضحة للعروض بدون تعقيد السحابة
